@@ -91,8 +91,10 @@ public class MenuForm : Form
 
     private void AbrirLoja()
     {
-        MessageBox.Show("Loja de jogos em construção.", "Em breve",
-            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        using var loja = new CardsJogosForm();
+        Hide();
+        loja.ShowDialog(this);
+        Show();
     }
 
     private void AbrirRelatorio()
