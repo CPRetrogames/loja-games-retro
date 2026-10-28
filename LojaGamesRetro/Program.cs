@@ -1,4 +1,5 @@
 using System.Globalization;
+using LojaGamesRetro.Forms;
 
 namespace LojaGamesRetro;
 
@@ -14,6 +15,11 @@ internal static class Program
         Thread.CurrentThread.CurrentUICulture = cultura;
 
         ApplicationConfiguration.Initialize();
+
+        using (var splash = new SplashForm())
+        {
+            splash.ShowDialog();
+        }
 
         Application.Run(new Form { Text = "Retro Games Store", Width = 800, Height = 600 });
     }
