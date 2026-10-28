@@ -34,3 +34,14 @@ LojaGamesRetro/
 ├── UI/        → Tema (cores, fontes e componentes no visual retrô)
 └── Program.cs → inicialização: Splash → Menu
 ```
+
+## Fluxo de trabalho (Git)
+
+- Branches principais: `main` e `dev`
+- Uma branch por tarefa: `feat/splash`, `feat/menu`, `feat/cards-jogos`, `feat/relatorio-vendas`, `docs/entrega`
+- Commits semânticos (`feat`, `fix`, `style`, `chore`, `docs`), no mínimo 3 por tarefa
+- Pull Request de cada tarefa para `dev`; ao final, PR de `dev` para `main`
+
+## Integrante
+
+Veja o arquivo [`integrante.txt`](integrante.txt).
