@@ -111,8 +111,10 @@ public class MenuForm : Form
 
     private void AbrirRelatorio()
     {
-        MessageBox.Show("Relatório de vendas em construção.", "Em breve",
-            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        using var relatorio = new RelatorioVendasForm();
+        Hide();
+        relatorio.ShowDialog(this);
+        Show();
     }
 
     private void AtualizarResumo()
