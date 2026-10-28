@@ -21,6 +21,6 @@ internal static class Program
             splash.ShowDialog();
         }
 
-        Application.Run(new Form { Text = "Retro Games Store", Width = 800, Height = 600 });
+        Application.Run(new MenuForm());
     }
 }

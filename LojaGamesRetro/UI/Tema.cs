@@ -57,6 +57,13 @@ public static class Tema
         };
         botao.FlatAppearance.BorderColor = destaque;
         botao.FlatAppearance.BorderSize = 2;
+        botao.FlatAppearance.MouseOverBackColor = destaque;
+        botao.FlatAppearance.MouseDownBackColor = PainelClaro;
+
+        // Efeito hover: inverte as cores (estilo botão de fliperama aceso)
+        botao.MouseEnter += (_, _) => { if (botao.Enabled) botao.ForeColor = Fundo; };
+        botao.MouseLeave += (_, _) => botao.ForeColor = destaque;
+        botao.EnabledChanged += (_, _) => botao.ForeColor = botao.Enabled ? destaque : TextoSuave;
 
         return botao;
     }
