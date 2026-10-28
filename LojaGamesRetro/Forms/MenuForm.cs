@@ -7,6 +7,8 @@ namespace LojaGamesRetro.Forms;
 /// </summary>
 public class MenuForm : Form
 {
+    private readonly Label lblRelogio;
+    private readonly System.Windows.Forms.Timer timerRelogio;
 
     public MenuForm()
     {
@@ -47,10 +49,44 @@ public class MenuForm : Form
         btnRelatorio.Click += (_, _) => AbrirRelatorio();
         btnSair.Click += (_, _) => Close();
 
+        var rodape = new Panel
+        {
+            Dock = DockStyle.Bottom,
+            Height = 40,
+            BackColor = Tema.Painel
+        };
+
+        var lblCreditos = new Label
+        {
+            Text = "FIAP • C# Development • 3ESPS",
+            Font = Tema.Titulo(9),
+            ForeColor = Tema.TextoSuave,
+            AutoSize = true,
+            Location = new Point(16, 12)
+        };
+
+        lblRelogio = new Label
+        {
+            Font = Tema.Titulo(10),
+            ForeColor = Tema.Neon,
+            AutoSize = false,
+            TextAlign = ContentAlignment.MiddleRight,
+            Bounds = new Rectangle(ClientSize.Width - 236, 8, 220, 24)
+        };
+
+        rodape.Controls.Add(lblCreditos);
+        rodape.Controls.Add(lblRelogio);
+
         Controls.AddRange(new Control[]
         {
-            lblLogo, lblSubtitulo, btnLoja, btnRelatorio, btnSair
+            lblLogo, lblSubtitulo, btnLoja, btnRelatorio, btnSair, rodape
         });
+
+        timerRelogio = new System.Windows.Forms.Timer { Interval = 1000 };
+        timerRelogio.Tick += (_, _) => AtualizarRelogio();
+        timerRelogio.Start();
+
+        AtualizarRelogio();
     }
 
     private void AbrirLoja()
@@ -65,10 +101,21 @@ public class MenuForm : Form
             MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
+    private void AtualizarRelogio()
+    {
+        lblRelogio.Text = DateTime.Now.ToString("dd/MM/yyyy  HH:mm:ss");
+    }
+
     protected override void OnPaint(PaintEventArgs e)
     {
         base.OnPaint(e);
-        var area = new Rectangle(20, 20, ClientSize.Width - 40, ClientSize.Height - 40);
+        var area = new Rectangle(20, 20, ClientSize.Width - 40, ClientSize.Height - 80);
         Tema.DesenharBordaNeon(e.Graphics, area, Tema.PainelClaro, 2);
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) timerRelogio.Dispose();
+        base.Dispose(disposing);
     }
 }
