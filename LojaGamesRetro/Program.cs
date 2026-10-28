@@ -1,4 +1,5 @@
 using System.Globalization;
+using LojaGamesRetro.Forms;
 
 namespace LojaGamesRetro;
 
@@ -15,6 +16,11 @@ internal static class Program
 
         ApplicationConfiguration.Initialize();
 
-        Application.Run(new Form { Text = "Retro Games Store", Width = 800, Height = 600 });
+        using (var splash = new SplashForm())
+        {
+            splash.ShowDialog();
+        }
+
+        Application.Run(new MenuForm());
     }
 }
