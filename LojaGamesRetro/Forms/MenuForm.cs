@@ -1,3 +1,4 @@
+using LojaGamesRetro.Data;
 using LojaGamesRetro.UI;
 
 namespace LojaGamesRetro.Forms;
@@ -7,6 +8,7 @@ namespace LojaGamesRetro.Forms;
 /// </summary>
 public class MenuForm : Form
 {
+    private readonly Label lblResumo;
     private readonly Label lblRelogio;
     private readonly System.Windows.Forms.Timer timerRelogio;
 
@@ -49,6 +51,14 @@ public class MenuForm : Form
         btnRelatorio.Click += (_, _) => AbrirRelatorio();
         btnSair.Click += (_, _) => Close();
 
+        lblResumo = new Label
+        {
+            Font = Tema.Titulo(10),
+            ForeColor = Tema.Amarelo,
+            TextAlign = ContentAlignment.MiddleCenter,
+            Bounds = new Rectangle(30, 400, ClientSize.Width - 60, 24)
+        };
+
         var rodape = new Panel
         {
             Dock = DockStyle.Bottom,
@@ -79,7 +89,7 @@ public class MenuForm : Form
 
         Controls.AddRange(new Control[]
         {
-            lblLogo, lblSubtitulo, btnLoja, btnRelatorio, btnSair, rodape
+            lblLogo, lblSubtitulo, btnLoja, btnRelatorio, btnSair, lblResumo, rodape
         });
 
         timerRelogio = new System.Windows.Forms.Timer { Interval = 1000 };
@@ -87,6 +97,7 @@ public class MenuForm : Form
         timerRelogio.Start();
 
         AtualizarRelogio();
+        AtualizarResumo();
     }
 
     private void AbrirLoja()
@@ -95,12 +106,20 @@ public class MenuForm : Form
         Hide();
         loja.ShowDialog(this);
         Show();
+        AtualizarResumo();
     }
 
     private void AbrirRelatorio()
     {
         MessageBox.Show("Relatório de vendas em construção.", "Em breve",
             MessageBoxButtons.OK, MessageBoxIcon.Information);
+    }
+
+    private void AtualizarResumo()
+    {
+        var vendas = RepositorioVendas.Listar();
+        var faturamento = vendas.Sum(v => v.Total);
+        lblResumo.Text = $"PEDIDOS: {vendas.Count}   |   FATURAMENTO: {faturamento:C}";
     }
 
     private void AtualizarRelogio()
